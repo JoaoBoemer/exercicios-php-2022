@@ -17,7 +17,6 @@ class BaseCountry implements CountryInterface {
    */
   protected $name;
   protected int $troops;
-  protected bool $conquered;
   protected $neighbors = array();
 
   /**
@@ -64,16 +63,20 @@ class BaseCountry implements CountryInterface {
 
   public function isConquered(): bool
   {
-    return $this->conquered;
+    if($this->troops == 0){
+      return true;
+    }
+    return false;
   }
 
   public function conquer(CountryInterface $conqueredCountry): void
   {
-
+    // Get the neighbors of conquered country // + 1 Troop next round
+    $this->troops += 1;
   }
 
   public function killTroops(int $killedTroops): void
   {
-
+    $this->troops -= $killedTroops;
   }
 }

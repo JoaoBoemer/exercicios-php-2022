@@ -23,6 +23,9 @@ class ComputerPlayerCountry extends BaseCountry {
    */
   public function chooseToAttack(): ?CountryInterface {
     $attack = rand(0, 1);
+    if(parent::getNumberOfTroops() == 1){ // Cant attack if only has 1 troop
+      $attack = 0;
+    }
     if($attack)
     {
       $neighbors = parent::getNeighbors();

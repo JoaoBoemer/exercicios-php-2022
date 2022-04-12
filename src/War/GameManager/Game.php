@@ -91,6 +91,7 @@ class Game {
   protected function playRound(): void {
     foreach ($this->getUnconqueredCountries() as $attackingCountry) {
       print "----- Vez de " . $attackingCountry->getName() . "\n";
+      print "Numero de tropas = " . $attackingCountry->getNumberOfTroops() . "\n";
 
       $defendingCountry = NULL;
       if ($attackingCountry instanceof ComputerPlayerCountry) {
@@ -129,9 +130,6 @@ class Game {
         else {
           print "  " . $defendingCountry->getName() . " conseguiu se defender!\n";
         }
-      }
-      else{
-        print "Nao atacou" . "!\n";
       }
       sleep(1);
     }
