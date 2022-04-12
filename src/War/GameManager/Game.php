@@ -130,6 +130,9 @@ class Game {
           print "  " . $defendingCountry->getName() . " conseguiu se defender!\n";
         }
       }
+      else{
+        print "Nao atacou" . "!\n";
+      }
       sleep(1);
     }
   }

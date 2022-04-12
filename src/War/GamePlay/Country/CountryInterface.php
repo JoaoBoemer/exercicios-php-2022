@@ -50,7 +50,7 @@ interface CountryInterface {
    * @return int
    *   The number of troops this country has.
    */
-  public function getNumberOfTroops(): int;
+  public function getNumberOfTroops(): int; // --
 
   /**
    * Determines whether the player has been conquered.
