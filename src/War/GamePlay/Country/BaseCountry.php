@@ -11,9 +11,12 @@ class BaseCountry implements CountryInterface {
 
   /**
    * The name of the country.
-   *
+   * The number of troops
+   * Array with neighbors
+   * 
    * @var string
-   *
+   * @var int
+   * @var array(objects)
    */
   protected $name;
   protected int $troops;
@@ -21,15 +24,14 @@ class BaseCountry implements CountryInterface {
 
   /**
    * Builder.
-   *
+   * Fix started num of troops
    * @param string $name
    *   The name of the country.
    */
   public function __construct(string $name) {
     $this->name = $name;
     $this->troops = 3;
-    $this->conquered = false;
-  }
+    }
 
   public function getName(): string
   {
@@ -71,27 +73,20 @@ class BaseCountry implements CountryInterface {
 
   public function conquer(CountryInterface $conqueredCountry): void
   {
-    // Vizinhos do pais conquistados se tornam vizinhos do pais que o conquistou
-    array_merge($this->neighbors, $conqueredCountry->getNeighbors());
-    //Vizinhos do país conquistado
-    foreach($conqueredCountry->getNeighbors() as $conqueredNeighbors){
-      //Vizinhos do país conquistado se tornam vizinhos do país que conquistou
-      //  $key = array_search($conqueredNeighbors, $conqueredCountry);
-      //  unset($conqueredNeighbors->getNeighbors(), $key);
+    // Vizinhos do pais conquistado se tornam vizinhos do pais que o conquistou
+    foreach($conqueredCountry->getNeighbors() as $newNeighbor){ // Vizinhos do pais conquistado = newNeighbor
+      $this->neighbors[] = $newNeighbor; 
+      if($newNeighbor->getName() == $this->getName()){ // Quando achar o pais com o mesmo nome que o atual, remove ele do array;
+        //array_push($newNeighbor->getNeighbors(), end($this->neighbors)); // Os Vizinhos do pais conquistado, recebem o pais que o conquistou
+        echo ("\n EU IA PASSAR ISSO: " . end($this->neighbors)->getName());
+        echo ("\n PARA ESSE LOCAL " . $newNeighbor->getName());
+        array_pop($this->neighbors);
+      }
     }
-
-    echo ("\n VIZIHNOS DE QUEM GANHOU \n");
-    foreach($this->neighbors as $country)
-    {
-      print($country->getName()); // NOMES DOS VIZINHOS ATUAIS
-      echo ("\n");
-
-    }
-    $this->troops ++; // true instead of ++
   }
 
   public function killTroops(int $killedTroops): void
   {
-    $this->troops -= $killedTroops;
+    $this->troops -= $killedTroops; // Substrai do numero de tropas, o numero que foi passado por parametro.
   }
 }

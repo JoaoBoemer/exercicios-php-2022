@@ -22,20 +22,22 @@ class ComputerPlayerCountry extends BaseCountry {
    *   The country that will be attacked, NULL if none will be.
    */
   public function chooseToAttack(): ?CountryInterface {
-    $attack = rand(0, 1);
-    if(parent::getNumberOfTroops() == 1){ // Cant attack if only has 1 troop
+
+    if(parent::getNumberOfTroops() == 1 or parent::getNumberOfTroops() == 0){ // Não pode atacar se possui apenas 1 tropa
       $attack = 0;
+    } else {
+      $attack = rand(0, 5); // 50/50 Ataca ou não ataca
     }
-    if($attack)
+    if($attack) // Se attack = 1 (50%)
     {
-      $neighbors = parent::getNeighbors();
-      $random_position = array_rand(parent::getNeighbors());
-      if($neighbors[$random_position]->isConquered()){
-        echo "DERROTADO ATACADO";
-      }
-      return $neighbors[$random_position];
-    }else{
-      return NULL;
+      $neighbors = parent::getNeighbors(); // neighbors = Pega os vizinhos do pais
+      foreach($neighbors as $country) // Para cada vizinho do pais
+        if(!($country->isConquered())) // Se o pais não está conquistado
+          $attackable[] = $country; // Atacável = pais, Attackable possui todos os paises vizinhos atacaveis
+      $random_position = array_rand($attackable); // Seleciona uma posicao aleatoria do array Atacável
+      return $attackable[$random_position]; // Retorna o pais selecionado
+    } else { // Se attack = 0 (50%)
+      return NULL; 
     }
   }
 

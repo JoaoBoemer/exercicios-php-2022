@@ -91,7 +91,10 @@ class Game {
   protected function playRound(): void {
     foreach ($this->getUnconqueredCountries() as $attackingCountry) {
       print "----- Vez de " . $attackingCountry->getName() . "\n";
-      print "Numero de tropas = " . $attackingCountry->getNumberOfTroops() . "\n";
+      foreach($attackingCountry->getNeighbors() as $paisesVizinhos){
+        print "\nPaises Vizinhos " . $paisesVizinhos->getName() . "\n";
+      }
+      
 
       $defendingCountry = NULL;
       if ($attackingCountry instanceof ComputerPlayerCountry) {
@@ -157,5 +160,4 @@ class Game {
       return !$country->isConquered();
     });
   }
-
 }
