@@ -27,40 +27,17 @@ class Battlefield implements BattlefieldInterface {
         sort($attackingDice);
         sort($defendingDice);
 
-        foreach($attackingDice as $dice){ // Soma dos dados de ataque
-            echo "\n Att: " . $dice;
-        }
-        foreach($defendingDice as $dice){ // Soma dos dados de ataque
-            echo "\n Def: " . $dice;
-        }
-        echo "\n";
-        /*
-        * Get the array with less elements and compares the highest value of both
-        *
-        */
-        if(sizeof($attackingDice) >= sizeof($defendingDice)){ // More (or equal) attackers than defenders
-            foreach($defendingDice as $dice){
-                if(end($defendingDice) >= end($attackingDice)){ // Defense wins
-                    $attackingCountry->killTroops(1);
-                    array_pop($attackingDice);
-                    array_pop($defendingDice);
-                }else{ // Attack wins
-                    $defendingCountry->killTroops(1);
-                    array_pop($attackingDice);
-                    array_pop($defendingDice);
-                }
-            }
-        }else{ // More defenders than attackers
-            foreach($attackingDice as $dice){
-                if(end($defendingDice) >= end($attackingDice)){ // Defense wins
-                    $attackingCountry->killTroops(1);
-                    array_pop($attackingDice);
-                    array_pop($defendingDice);
-                }else{ // Attack wins
-                    $defendingCountry->killTroops(1);
-                    array_pop($attackingDice);
-                    array_pop($defendingDice);
-                }
+        foreach($attackingDice as $dice){
+            if(end($defendingDice) >= end($attackingDice)){ // Defense wins
+                $attackingCountry->killTroops(1);
+            }else{ // Attack wins
+                $defendingCountry->killTroops(1);
+            } // Remove o dado utilizado da próxima verirficação
+            array_pop($attackingDice);
+            array_pop($defendingDice);
+            if(empty($defendingDice) or empty($attackingDice)) // Se acabou o numero de dados de algum do ataque/defesa
+            {
+                break;
             }
         }
     }

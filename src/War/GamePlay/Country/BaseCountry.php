@@ -71,8 +71,23 @@ class BaseCountry implements CountryInterface {
 
   public function conquer(CountryInterface $conqueredCountry): void
   {
-    // Get the neighbors of conquered country // + 1 Troop next round
-    $this->troops += 1;
+    // Vizinhos do pais conquistados se tornam vizinhos do pais que o conquistou
+    array_merge($this->neighbors, $conqueredCountry->getNeighbors());
+    //Vizinhos do país conquistado
+    foreach($conqueredCountry->getNeighbors() as $conqueredNeighbors){
+      //Vizinhos do país conquistado se tornam vizinhos do país que conquistou
+      //  $key = array_search($conqueredNeighbors, $conqueredCountry);
+      //  unset($conqueredNeighbors->getNeighbors(), $key);
+    }
+
+    echo ("\n VIZIHNOS DE QUEM GANHOU \n");
+    foreach($this->neighbors as $country)
+    {
+      print($country->getName()); // NOMES DOS VIZINHOS ATUAIS
+      echo ("\n");
+
+    }
+    $this->troops ++; // true instead of ++
   }
 
   public function killTroops(int $killedTroops): void
