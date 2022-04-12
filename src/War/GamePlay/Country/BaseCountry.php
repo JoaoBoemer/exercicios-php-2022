@@ -24,4 +24,38 @@ class BaseCountry implements CountryInterface {
     $this->name = $name;
   }
 
+  public function getName(): string
+  {
+    return $this->name;
+  }
+
+  public function setNeighbors(array $neighbors): void
+  {
+    
+  }
+
+  public function getNeighbors(): array
+  {
+    return [6];
+  }
+
+  public function getNumberOfTroops(): int
+  {
+    return 5;
+  }
+
+  public function isConquered(): bool
+  {
+    return false;
+  }
+
+  public function conquer(CountryInterface $conqueredCountry): void
+  {
+
+  }
+
+  public function killTroops(int $killedTroops): void
+  {
+    
+  }
 }
